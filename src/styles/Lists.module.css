@@ -1,0 +1,96 @@
+.modalBg {
+    background-color: hsla(211, 16%, 34%, 50%);
+    position: absolute;
+    inset: 0;
+    z-index: 99999;
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background-color: azure;
+    padding: 2rem 2rem;
+    border-radius: 0.25rem;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.10) 0px 6px 6px;
+}
+
+.modalHeader {
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.modal h3 {
+    font-size: 2rem;
+}
+
+.colorContainer {
+    width: fit-content;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.titleInput {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    background-color: transparent;
+    border: 1px solid rgba(186, 191, 196, 0.85);
+    font-size: 1rem;
+}
+
+.btn {
+    margin-top: 2rem;
+    min-width: 100px;
+    background-color: #485563;
+    color: azure;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn:hover {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.10) 0px 6px 6px;
+  }
+  
+  .btn:focus {
+    transform: scale(0.95);
+  }
+
+.disabledBtn {
+    pointer-events: none !important;
+}
+
+.disabledBtn:hover {
+    all: unset !important;
+}
+
+.notFoundContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15rem;
+}
+
+.notFoundContainer p:first-of-type {
+    font-size: 3rem;
+    color: azure;
+    font-weight: 100;
+}
+
+.notFoundContainer p {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: azure;
+    font-weight: 100;
+}
