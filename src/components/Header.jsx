@@ -1,8 +1,12 @@
 import { SiTodoist } from "react-icons/si";
 import { HiOutlinePlus } from "react-icons/hi";
 import AddList from "./AddList";
+import { useContext } from "react";
+import AppContext from "../AppContext";
 
-function Header({ listModal, setListModal }) {
+function Header() {
+  const { setListModal } = useContext(AppContext);
+
   return (
     <>
       <nav>
@@ -17,7 +21,7 @@ function Header({ listModal, setListModal }) {
           </button>
         </div>
       </nav>
-      <AddList listModal={listModal} setListModal={setListModal} />
+      <AddList />
     </>
   );
 }

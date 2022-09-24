@@ -1,7 +1,7 @@
 import styles from "../styles/Lists.module.css";
 import { useContext } from "react";
 import AppContext from "../AppContext";
-import { TbMoodEmpty } from "react-icons/tb";
+import List from "./List";
 
 function Lists() {
   const { lists } = useContext(AppContext);
@@ -14,6 +14,16 @@ function Lists() {
       </div>
     );
   }
+
+  return (
+    <div className="container">
+      <div className={styles.listsContainer}>
+        {lists.map((list, index) => (
+          <List key={index} list={list} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default Lists;

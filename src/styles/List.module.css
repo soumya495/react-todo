@@ -1,0 +1,105 @@
+.listContainer {
+    min-width: 280px;
+    border-radius: 0.25rem;
+    background-color: hsla(180, 100%, 97%, 0.45);
+    min-height: max-content;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.10) 0px 6px 6px;
+}
+
+.listHeader {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.listHeader p {
+    font-size: 1.30rem;
+    font-weight: 600;
+    color: #171c22;
+    max-width: 230px;
+    word-break: break-all;
+    word-wrap: break-word;
+    line-height: 0.85;
+}
+.listHeader svg {
+    min-width: 30px;
+}
+
+.popup {
+    position: absolute;
+    right: 1rem;
+    top: 2rem;
+    border-radius: 0.5rem;
+    z-index: 8888;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 20px, rgba(0, 0, 0, 0.10) 0px 6px 6px;
+ 
+    opacity: 1;
+    transform: scaleY(1);
+    visibility: visible;
+    pointer-events: all;
+    transform-origin: top;
+
+    transition: all 250ms ease-in-out;
+    overflow: hidden;
+}
+
+.popup p {
+    padding: 0.5rem;
+    line-height: 0.75;
+    font-size: 0.95rem;
+    min-width: 140px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background-color: hsla(180, 100%, 97%, 0.85);
+
+}
+
+.popup p:hover {
+    background-color: hsla(180, 100%, 97%, 0.80);
+}
+
+
+.popup p:first-of-type {
+    border-bottom: 1px solid rgb(158, 158, 158);
+}
+
+.hidePopup {
+    opacity: 0;
+    transform: scaleY(0);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.smallPara {
+    max-width: 330px;
+    font-size: 1rem;
+    line-height: 1.1;
+    margin-top: 0.15rem;
+    margin-bottom: 0.75rem;
+}
+
+.modalBtnContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.75rem;
+}
+
+.delBtn {
+    background-color: rgb(255, 84, 54);
+    color: azure;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 1.05rem;
+}
+
+.cnrfBtn {
+    background-color: darkgray;
+    color: azure;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 1.05rem;
+}

@@ -4,11 +4,32 @@ import { IoCloseOutline } from "react-icons/io5";
 import { v4 as uuidv4 } from "uuid";
 import AppContext from "../AppContext";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
-function AddList({ listModal, setListModal }) {
+function AddList() {
+  const {
+    listModal,
+    setListModal,
+    addList,
+    updateList,
+    editList,
+    setEditList,
+  } = useContext(AppContext);
+
   const [title, setTitle] = useState("");
   const [color, setColor] = useState("");
-  const { addList } = useContext(AppContext);
+
+  useEffect(() => {
+    if (editList) {
+      setListModal(true);
+      setTitle(editList.title);
+      setColor(editList.statusColor);
+    } else {
+      setListModal(false);
+      setTitle("");
+      setColor("");
+    }
+  }, [editList, setListModal]);
 
   // status colors
   const colorData = ["#ff3838", "#ffb302", "#fce83a", "#56f000", "#2dccff"];
@@ -18,6 +39,7 @@ function AddList({ listModal, setListModal }) {
     setTitle("");
     setColor("");
     setListModal(false);
+    setEditList(null);
   };
 
   // handle form submission
@@ -36,28 +58,39 @@ function AddList({ listModal, setListModal }) {
       return toast.warn("Missing Color");
     }
 
-    // create a new list
-    const newList = {
-      id: uuidv4(),
-      title: title,
-      statusColor: color,
-      tickets: [],
-    };
+    if (!editList) {
+      // create a new list
+      const newList = {
+        id: uuidv4(),
+        title: title,
+        statusColor: color,
+        tickets: [],
+      };
 
-    addList(newList);
+      addList(newList);
 
-    toast.success("List Added");
+      toast.success("List Added");
+    } else {
+      // update the list
+      updateList({
+        id: editList.id,
+        tickets: editList.tickets,
+        statusColor: color,
+        title,
+      });
+
+      toast.success("List Updated");
+    }
 
     onClose();
   };
 
   if (!listModal) return null;
-
   return (
     <div className={styles.modalBg} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
-          <h3>Add New List</h3>
+          <h3>{editList ? "Update List" : "New List"}</h3>
           <button onClick={onClose} className="btn">
             <IoCloseOutline fill="#485563" fontSize="2.25rem" />
           </button>
@@ -71,7 +104,7 @@ function AddList({ listModal, setListModal }) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className={styles.titleInput}
-              maxLength={50}
+              maxLength={40}
             />
           </label>
           <div>
@@ -97,15 +130,35 @@ function AddList({ listModal, setListModal }) {
               ))}
             </div>
           </div>
-          <button
-            type="submit"
-            disabled={title === "" || color === ""}
-            className={`btn ${styles.btn} ${
-              (title === "" || color === "") && styles.disabledBtn
-            }`}
-          >
-            Add
-          </button>
+          {editList ? (
+            <button
+              type="submit"
+              disabled={
+                title === "" ||
+                color === "" ||
+                (title === editList.title && color === editList.statusColor)
+              }
+              className={`btn ${styles.btn} ${
+                (title === "" ||
+                  color === "" ||
+                  (title === editList.title &&
+                    color === editList.statusColor)) &&
+                styles.disabledBtn
+              }`}
+            >
+              Update
+            </button>
+          ) : (
+            <button
+              type="submit"
+              disabled={title === "" || color === ""}
+              className={`btn ${styles.btn} ${
+                (title === "" || color === "") && styles.disabledBtn
+              }`}
+            >
+              Add
+            </button>
+          )}
         </form>
       </div>
     </div>

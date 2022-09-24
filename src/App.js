@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import { AppContextProvider } from "./AppContext";
 import Header from "./components/Header";
@@ -8,11 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Lists from "./components/Lists";
 
 function App() {
-  const [listModal, setListModal] = useState(false);
-
   return (
     <AppContextProvider>
-      <Header listModal={listModal} setListModal={setListModal} />
+      <Header />
       <Lists />
       <ToastContainer position="top-center" />
     </AppContextProvider>
