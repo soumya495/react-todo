@@ -4,14 +4,21 @@ import { useState, useContext } from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { useReducer } from "react";
 import AppContext from "../AppContext";
 import { toast } from "react-toastify";
+import AddTicket from "./AddTicket";
+import Tickets from "./Tickets";
 
-function List({ list }) {
+function List({ listId }) {
   const [showMenuPopup, setShowMenuPopup] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const { setEditList, deleteList } = useContext(AppContext);
+  const { getList, setEditList, deleteList, getTickets } =
+    useContext(AppContext);
+  const [list, setList] = useState(getList(listId));
+  const [tickets, setTickets] = useState(getTickets(listId));
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const { title, statusColor } = list;
 
@@ -59,6 +66,8 @@ function List({ list }) {
             </p>
           </div>
         </div>
+        {tickets.length > 0 && <Tickets tickets={tickets} />}
+        <AddTicket list={list} forceUpdate={forceUpdate} />
       </div>
       {showDeleteModal && (
         <div className={styles2.modalBg} onClick={onClose}>

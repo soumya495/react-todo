@@ -19,7 +19,7 @@ function Lists() {
     <div className="container">
       <div className={styles.listsContainer}>
         {lists.map((list, index) => (
-          <List key={index} list={list} />
+          <List key={index} listId={list.id} />
         ))}
       </div>
     </div>

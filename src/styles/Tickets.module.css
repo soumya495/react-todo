@@ -1,0 +1,10 @@
+.ticketContainer {
+    padding: 0.5rem;
+}
+
+.ticket {
+    background-color: rgba(240, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 0.5rem;
+    border-radius: 0.25rem;
+}

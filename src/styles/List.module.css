@@ -103,3 +103,47 @@
     letter-spacing: 1px;
     font-size: 1.05rem;
 }
+
+.addTicketContainer {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0 0.5rem;
+    border-top: 1px solid rgba(91, 91, 91, 0.5);
+    cursor: pointer;
+}
+
+.addTicketContainer > p {
+    font-size: 0.90rem;
+    font-weight: 500;
+}
+
+.btnContainerBottom {
+    margin-top: 0.75rem;
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0 0.5rem;
+}
+
+.btnContainerBottom button {
+    background-color: rgb(164, 164, 164);
+    color: azure;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    padding: 0.25rem 1rem;
+}
+
+.ticketForm {
+    padding: 0.75rem;
+    border-top: 1px solid rgba(91, 91, 91, 0.5);
+}
+
+.ticketForm textarea {
+    width: 100%;
+    min-height: 70px;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    background-color: rgba(255,255,255,0.9);
+}

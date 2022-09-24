@@ -15,6 +15,19 @@ export const AppContextProvider = ({ children }) => {
       : []
   );
 
+  // useEffect(() => {
+  //   setLists(
+  //     localStorage.getItem("lists")
+  //       ? JSON.parse(localStorage.getItem("lists"))
+  //       : []
+  //   );
+  // }, [lists]);
+
+  // get list by id
+  const getList = (listId) => {
+    return lists.find((l) => l.id === listId);
+  };
+
   // add new list to state and storage
   const addList = (list) => {
     let newLists = lists;
@@ -52,10 +65,30 @@ export const AppContextProvider = ({ children }) => {
     localStorage.setItem("lists", JSON.stringify(newLists));
   };
 
+  // get all tickets
+  const getTickets = (listId) => {
+    let existingList = lists.find((l) => l.id === listId);
+    return existingList.tickets;
+  };
+
+  // add ticket
+  const addTicket = (list, ticket) => {
+    let newLists = lists;
+    let existingList = newLists.find((l) => l.id === list.id);
+
+    const indexOfList = newLists.indexOf(existingList);
+
+    newLists[indexOfList].tickets.unshift(ticket);
+
+    setLists(newLists);
+    localStorage.setItem("lists", JSON.stringify(newLists));
+  };
+
   return (
     <AppContext.Provider
       value={{
         lists,
+        getList,
         addList,
         updateList,
         listModal,
@@ -63,6 +96,8 @@ export const AppContextProvider = ({ children }) => {
         editList,
         setEditList,
         deleteList,
+        addTicket,
+        getTickets,
       }}
     >
       {children}
