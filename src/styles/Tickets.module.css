@@ -7,4 +7,21 @@
     margin-bottom: 0.5rem;
     padding: 0.75rem 0.5rem;
     border-radius: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ticket svg {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 250ms ease-in-out;
+}
+
+.ticket:hover svg {
+    opacity: 0.6;
+    visibility: visible;
+    pointer-events: all;
 }

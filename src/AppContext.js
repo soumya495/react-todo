@@ -15,13 +15,7 @@ export const AppContextProvider = ({ children }) => {
       : []
   );
 
-  // useEffect(() => {
-  //   setLists(
-  //     localStorage.getItem("lists")
-  //       ? JSON.parse(localStorage.getItem("lists"))
-  //       : []
-  //   );
-  // }, [lists]);
+  const [ticketEditModal, setTicketEditModal] = useState(null);
 
   // get list by id
   const getList = (listId) => {
@@ -42,11 +36,11 @@ export const AppContextProvider = ({ children }) => {
 
     let newLists = lists;
 
-    console.log(newLists, updatedList);
+    // console.log(newLists, updatedList);
 
     let existingList = newLists.find((l) => l.id === id);
 
-    console.log(existingList);
+    // console.log(existingList);
 
     existingList.title = updatedList.title;
     existingList.statusColor = updatedList.statusColor;
@@ -61,6 +55,8 @@ export const AppContextProvider = ({ children }) => {
 
     newLists = newLists.filter((l) => l.id !== id);
 
+    // console.log(newLists);
+
     setLists(newLists);
     localStorage.setItem("lists", JSON.stringify(newLists));
   };
@@ -68,7 +64,7 @@ export const AppContextProvider = ({ children }) => {
   // get all tickets
   const getTickets = (listId) => {
     let existingList = lists.find((l) => l.id === listId);
-    return existingList.tickets;
+    return existingList?.tickets;
   };
 
   // add ticket
@@ -79,6 +75,57 @@ export const AppContextProvider = ({ children }) => {
     const indexOfList = newLists.indexOf(existingList);
 
     newLists[indexOfList].tickets.unshift(ticket);
+
+    setLists(newLists);
+    localStorage.setItem("lists", JSON.stringify(newLists));
+  };
+
+  // update ticket
+  const updateTicket = (currentList, ticket) => {
+    // console.log(currentList, ticket);
+
+    let newLists = lists;
+
+    // if ticket stays in current list, update content
+    if (currentList.id === ticket.listInfo.listId) {
+      let existingList = newLists.find((l) => l.id === currentList.id);
+      let indexOfExistingList = newLists.indexOf(existingList);
+
+      // find existing ticket
+      let indexOfExistingTicket;
+      existingList.tickets.forEach((t, index) => {
+        if (t.id === ticket.id) {
+          indexOfExistingTicket = index;
+        }
+      });
+
+      newLists[indexOfExistingList].tickets[indexOfExistingTicket] = {
+        id: ticket.id,
+        title: ticket.title,
+        desc: ticket.desc,
+        listInfo: {
+          listId: ticket.listId,
+          listTitle: ticket.listName,
+        },
+      };
+    }
+    // else remove ticket from current list
+    else {
+      let existingList = newLists.find((l) => l.id === currentList.id);
+      let indexOfExistingList = newLists.indexOf(existingList);
+
+      // remove ticket from current list
+      newLists[indexOfExistingList].tickets = newLists[
+        indexOfExistingList
+      ].tickets.filter((t) => t.id !== ticket.id);
+
+      // add ticket to desired list
+      const desiredListId = ticket.listInfo.listId;
+      let desiredList = newLists.find((l) => l.id === desiredListId);
+      let indexOfDesiredList = newLists.indexOf(desiredList);
+
+      newLists[indexOfDesiredList].tickets.unshift(ticket);
+    }
 
     setLists(newLists);
     localStorage.setItem("lists", JSON.stringify(newLists));
@@ -98,6 +145,9 @@ export const AppContextProvider = ({ children }) => {
         deleteList,
         addTicket,
         getTickets,
+        ticketEditModal,
+        setTicketEditModal,
+        updateTicket,
       }}
     >
       {children}

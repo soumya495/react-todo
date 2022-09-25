@@ -1,6 +1,6 @@
 import styles from "../styles/List.module.css";
 import styles2 from "../styles/Lists.module.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
@@ -10,15 +10,14 @@ import { toast } from "react-toastify";
 import AddTicket from "./AddTicket";
 import Tickets from "./Tickets";
 
-function List({ listId }) {
+function List({ list, forceUpdate }) {
+  const { getList, setEditList, deleteList, getTickets } =
+    useContext(AppContext);
+
   const [showMenuPopup, setShowMenuPopup] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const { getList, setEditList, deleteList, getTickets } =
-    useContext(AppContext);
-  const [list, setList] = useState(getList(listId));
-  const [tickets, setTickets] = useState(getTickets(listId));
-  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  if (list === null) return null;
 
   const { title, statusColor } = list;
 
@@ -66,7 +65,13 @@ function List({ listId }) {
             </p>
           </div>
         </div>
-        {tickets.length > 0 && <Tickets tickets={tickets} />}
+        {list.tickets.length > 0 && (
+          <Tickets
+            tickets={list.tickets}
+            forceUpdate={forceUpdate}
+            // fetchTickets={fetchTickets}
+          />
+        )}
         <AddTicket list={list} forceUpdate={forceUpdate} />
       </div>
       {showDeleteModal && (
@@ -83,8 +88,9 @@ function List({ listId }) {
               <button
                 className={`btn ${styles.delBtn}`}
                 onClick={() => {
-                  deleteList(list.id);
                   setShowDeleteModal(false);
+                  deleteList(list.id);
+                  forceUpdate();
                   toast.success("List Deleted");
                 }}
               >

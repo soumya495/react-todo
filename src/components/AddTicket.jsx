@@ -28,7 +28,7 @@ function AddTicket({ list, forceUpdate }) {
       },
     };
 
-    console.log(newTicket);
+    // console.log(newTicket);
 
     addTicket(list, newTicket);
     setTicketTitle("");
